@@ -6,4 +6,3 @@ print(f"Всего обнаружено: {total} серверов. \n")
 
 for server in servers_list:
     print(f"🔥 Сервер {server} взят под мониторинг")
-
