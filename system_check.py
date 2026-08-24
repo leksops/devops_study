@@ -1,8 +1,9 @@
-servers_list = ["10.0.0.1", "10.0.0.2"]
-servers_list.append("10.0.0.3")
+network_statuses = ["🟢 10.0.0.1", "🔴 10.0.0.2", "🟢 10.0.0.3", "🔴 10.0.0.4"]
+broken_servers = []
 
-total = len(servers_list)
-print(f"Всего обнаружено: {total} серверов. \n")
+for status in network_statuses :
+    if "🔴" in status:
+        broken_servers.append(status)
 
-for server in servers_list:
-    print(f"🔥 Сервер {server} взят под мониторинг")
+count = len(broken_servers)
+print(f"внимание! обнаружено {count} упавших верверов: {broken_servers}")
