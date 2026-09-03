@@ -5,17 +5,17 @@
     <title>DevOps Dashboard</title>
     <style>
         body { font-family: Arial; margin: 40px; background: #f4f4f9; }
-        .server { padding: 15px; margin: 10px 0; border-radius: 5px; color: white; font-weight: bold; }
+        .server { padding: 15px; margin: 10px 0;
+                  border-radius: 5px; color: white; font-weight: bold; }
         .up { background: #2ecc71; }
         .down { background: #e74c3c; }
     </style>
 </head>
 <body>
-    <h1>📊 Статус инфраструктуры (Мониторинг Саши)</h1>
-<div class="server up">🟢 Сервер 10.0.0.1 — Работает стабильно</div>
-<div class="server up">🟢 Сервер 10.0.0.2 — Работает стабильно</div>
-<div class="server down">🔴 Сервер 10.0.0.3 — КРИТИЧЕСКАЯ ОШИБКА (Упал)</div>
-<div class="server up">🟢 Сервер 10.0.0.4 — Работает стабильно</div>
+    <h1>📊 Живой статус сайтов (Мониторинг)</h1>
+<div class="server up">🟢 https://google.com — Доступен (Код 200)</div>
+<div class="server up">🟢 https://github.com — Доступен (Код 200)</div>
+<div class="server down">🔴 https://this-site-definitely-does-not-exist-123.com — НЕДОСТУПЕН (Ошибка)</div>
 
 </body>
 </html>

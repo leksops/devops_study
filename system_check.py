@@ -1,9 +1,14 @@
-print("=== ЗАПУСК МОНИТОРИНГА СЕТИ ===")
+import urllib.request
 
-# 1. Список серверов для проверки
-servers = ["10.0.0.1", "10.0.0.2", "10.0.0.3", "10.0.0.4"]
+print("=== ЗАПУСК ЖИВОГО МОНИТОРИНГА СЕТИ ===")
 
-# 2. Имитируем, что сервер 10.0.0.3 упал (для наглядности)
+# 1. Список реальных адресов для проверки
+sites_to_check = [
+    "https://google.com",
+    "https://github.com",
+    "https://this-site-definitely-does-not-exist-123.com"
+]
+
 html_content = """
 <html>
 <head>
@@ -18,25 +23,34 @@ html_content = """
     </style>
 </head>
 <body>
-    <h1>📊 Статус infraestructura (Мой мониторинг)</h1>
+    <h1>📊 Живой статус сайтов (Мониторинг)</h1>
 """
 
-# 3. Циклом обходим сервера и динамически дописываем кусочки HTML-кода
-for ip in servers:
-    if ip == "10.0.0.3":
-        msg = f'<div class="server down">🔴 Сервер {ip} — Упал</div>\n'
+# 2. Циклом обходим сайты и делаем реальные сетевые запросы
+for url in sites_to_check:
+    try:
+        # Пробуем постучаться на сайт
+        response = urllib.request.urlopen(url, timeout=3)
+        # Если сайт ответил, получаем его HTTP-код (200 означает "Всё ок")
+        status_code = response.getcode()
+        
+        if status_code == 200:
+            msg = f'<div class="server up">🟢 {url} — Доступен (Код 200)</div>\n'
+            html_content += msg
+            print(f"🟢 {url} — успешно проверен.")
+    except Exception:
+        # Если сайт не ответил, возникнет ошибка, и мы падаем в этот блок
+        msg = f'<div class="server down">🔴 {url} — НЕДОСТУПЕН (Ошибка)</div>\n'
         html_content += msg
-    else:
-        msg = f'<div class="server up">🟢 Сервер {ip} — Стабилен</div>\n'
-        html_content += msg
+        print(f"🔴 {url} — упал или недоступен.")
 
 html_content += """
 </body>
 </html>
 """
 
-# 4. Записываем весь получившийся текст в файл index.html для Nginx
+# 3. Записываем результат в файл для Nginx
 with open("index.html", "w", encoding="utf-8") as file:
     file.write(html_content)
 
-print("✅ Отчет успешно сгенерирован в файл index.html!")
+print("✅ Живой отчет успешно сгенерирован в index.html!")
