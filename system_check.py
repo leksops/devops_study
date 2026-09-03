@@ -33,14 +33,20 @@ for url in sites_to_check:
         response = urllib.request.urlopen(url, timeout=3)
         # Если сайт ответил, получаем его HTTP-код (200 означает "Всё ок")
         status_code = response.getcode()
-        
+
         if status_code == 200:
-            msg = f'<div class="server up">🟢 {url} — Доступен (Код 200)</div>\n'
+            msg = (
+                f'<div class="server up">'
+                f'🟢 {url} — Доступен (Код 200)</div>\n'
+            )
             html_content += msg
             print(f"🟢 {url} — успешно проверен.")
     except Exception:
-        # Если сайт не ответил, возникнет ошибка, и мы падаем в этот блок
-        msg = f'<div class="server down">🔴 {url} — НЕДОСТУПЕН (Ошибка)</div>\n'
+        # Если сайт не ответил, возникнет ошибка
+        msg = (
+            f'<div class="server down">'
+            f'🔴 {url} — НЕДОСТУПЕН (Ошибка)</div>\n'
+        )
         html_content += msg
         print(f"🔴 {url} — упал или недоступен.")
 
